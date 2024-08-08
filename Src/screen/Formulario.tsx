@@ -1,39 +1,39 @@
-import React from 'react'
-import {  Button, Text, View } from 'react-native';
+import React, { useState } from 'react'
+import { Button, Text, View } from 'react-native';
 import { styles } from '../theme/appTheme';
 import InputComponents from '../components/InputComponents';
 
 const Formulario = () => {
-
-    const [val1, setVal1] = React.useState('');
-    const [val2, setVal2] = React.useState('');
-    const [res, setRes] = React.useState('');
+    //hook useState: manipulamos el estado del objeto
+    const [val1, setVal1] = useState('');
+    const [val2, setVal2] = useState('');
+    const [resultado, setResultado] = useState<null | number | string>(null);
+    const handleCalculate = (result: string | number) => {
+        setResultado(result);
+      };
 
     const RealizarDivision = () => {
         const numero1 = parseFloat(val1);
         const numero2 = parseFloat(val2);
         if (numero1 === 0 && numero2 === 0) {
-            setRes('INDETERMINACIÓN');
+            setResultado('INDETERMINACIÓN');
         } else if (numero2 === 0) {
-            setRes('NO EXISTE DIVISIÓN PARA CERO');
+            setResultado('NO EXISTE DIVISIÓN PARA CERO');
         } else {
-            setRes((numero1 / numero2).toString());
+            setResultado((numero1 / numero2).toString());
         }
     };
     return (
         <View style={styles.container}>
-            <InputComponents placeholder='Ingrese el primer número'
-                //value={val1}
-                //onChangeText={setVal1}
+            <Text style={styles.title}>FORMULARIO</Text>
+            <InputComponents placeholder='Ingrese el primer número'onChange={setVal1} 
             />
-            <InputComponents placeholder='Ingrese el segundo número'
-            
-               // value={val2}
-                //onChangeText={setVal2}
+            <InputComponents placeholder='Ingrese el segundo número' onChange={setVal2}
             />
-            <Button title="Dividir" onPress={RealizarDivision} />
-            {res !== '' && <Text>Resultado: {res}</Text>}
+            <Button title="Dividir" onPress={RealizarDivision}  />
+            {resultado !== '' && <Text>Resultado: {resultado}</Text>}
         </View>
+        
     )
 }
 
